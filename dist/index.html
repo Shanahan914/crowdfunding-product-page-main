@@ -23,75 +23,99 @@
       .attribution a {
         color: hsl(228, 45%, 44%);
       }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     </style>
     <link href="output.css" rel="stylesheet" />
   </head>
   <body class="bg-gray-100 relative flex flex-col justify-center items-center">
-    <img src="images/image-hero-mobile.jpg" alt="picture of a desk" />
-    <div class="absolute inset-0 mt-2 ml-2">
+    <picture>
+      <source
+        media="(min-width: 625px)"
+        srcset="images/image-hero-desktop.jpg"
+      />
+      <img src="images/image-hero-mobile.jpg" alt="picture of a desk" />
+    </picture>
+    <div class="absolute inset-0 mt-5 ml-14 h-fit">
       <img src="images/logo.svg" alt="logo" class="fill-black" />
     </div>
-    <div class="absolute top-0 right-5 mt-2">
-      <img src="images/icon-hamburger.svg" alt="menu icon" class="h-4 w-4" />
+    <div class="absolute top-0 right-5 mt-5 sm:hidden">
+      <button class="menu-btn">
+        <img src="images/icon-hamburger.svg" alt="menu icon" class="h-4 w-4" />
+      </button>
     </div>
 
-    <!-- add js to show this -->
+
     <nav
-      class="flex flex-col bg-white justify-center w-3/4 absolute top-14 rounded-lg hidden"
+      class="flex flex-col bg-white justify-center w-3/4 absolute top-20 sm:inset-0 sm:ml-auto sm:mr-14 sm:mt-5  sm:w-fit rounded-lg hidden sm:block sm:flex-row sm:bg-transparent sm:text-white sm:font-semibold"
     >
       <a href="#" class="my-3 ml-3 font-semibold">About</a>
-      <hr />
+      <hr class="sm:hidden" />
       <a href="#" class="my-3 ml-3 font-semibold">Discover</a>
-      <hr />
+      <hr class="sm:hidden" />
       <a href="#" class="my-3 ml-3 font-semibold">Get Started</a>
     </nav>
 
-    <main class="m-5">
+    <main class="-mt-10 mx-5 max-w-screen-sm">
       <section
         class="flex flex-col p-4 text-center justify-center items-center bg-white rounded-xl"
       >
+        <img src="images/logo-mastercraft.svg" alt="mastercraft logo" class="-mt-10">
         <h1 class="text-xl font-extrabold mt-5">
           Mastercraft Bamboo Monitor Riser
         </h1>
         <p class="text-xs text-gray-600 mt-2">
           A beautiful & handcrafted monitor stand to reduce neck and eye strain.
         </p>
-        <div class="flex my-4">
-          <button class="bg-teal-600 text-white text-xs rounded-3xl h-12 w-44 hover:bg-sky-700">
-            Back this project
+        <div class="flex my-4 sm:justify-start sm:w-full">
+          <button class="bg-teal-500 text-white text-xs rounded-3xl h-12 w-44 hover:bg-teal-700 backBtn">
+              Back this project
           </button>
-          <button class="ml-2 rounded-full flex justify-center items-center ">
-            <img
-              src="images/icon-bookmark.svg"
-              alt="bookmark"
-              class="h-12 w-12"
-            />
-          </button>
-        </div>
+          <div class="relative flex items-center ml-5 sm:ml-64">
+              <button class="rounded-full flex justify-center items-center fill-teal-700 h-12 w-12 relative group bookmark not-bookmarked">
+                  <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" class="z-10">
+                      <g fill="none" fill-rule="evenodd">
+                          <circle fill="#2F2F2F" cx="28" cy="28" r="28" class=" group-hover:fill-gray-500"/>
+                          <path fill="#B1B1B1" d="M23 19v18l5-5.058L33 37V19z" />
+                      </g>
+                  </svg>
+                  <span class="flex items-center justify-center h-12 w-44 bg-gray-300 absolute left-0  align-middle rounded-3xl hidden sm:flex z-0">
+                    <p class="ml-8 font-semibold group-hover:text-gray-600">Bookmark</p>
+                </span>
+              </button>
+              
+          </div>
+      </div>
+      
       </section>
 
       <section
         class="flex flex-col p-4 mt-5 text-center justify-center items-center bg-white rounded-xl"
       >
         <div>
-          <h2 class="font-bold text-2xl">$89,914</h2>
+          <h2 class="font-bold text-2xl" id="backed-amount">$49,914</h2>
           <p class="text-xs text-gray-600 mt-1">of $100,000 backed</p>
           <hr class="my-3" />
         </div>
 
         <div>
-          <h2 class="font-bold text-2xl">5,007</h2>
+          <h2 class="font-bold text-2xl" id="total-backers">5,007</h2>
           <p class="text-xs text-gray-600 mt-1">total backers</p>
           <hr class="my-3" />
         </div>
 
         <div>
-          <h2 class="font-bold text-2xl">56</h2>
+          <h2 class="font-bold text-2xl" id="days-left">56</h2>
           <p class="text-xs text-gray-600 mt-1">days left</p>
         </div>
 
         <div class="bg-gray-100 h-2 w-full rounded-md mt-4">
-          <div class="bg-teal-600 h-2 w-5/6 rounded-md"></div>
+          <div data-target="100000"
+            id="progress-bar"
+          class="bg-teal-600 h-2 w-3/6 rounded-md"></div>
         </div>
       </section>
 
@@ -122,7 +146,8 @@
             <p class="ml-2 text-sm">left</p>
           </div>
           <button
-            class="bg-teal-600 text-white text-xs rounded-3xl mt-4 h-10 w-36"
+            class="bg-teal-500 text-white text-xs rounded-3xl mt-4 h-10 w-36 z-40 hover:bg-teal-700 select-button"
+            data-modal = "1"
           >
             Select Reward
           </button>
@@ -141,7 +166,8 @@
             <p class="ml-2 text-sm">left</p>
           </div>
           <button
-            class="bg-teal-600 text-white text-xs rounded-3xl mt-4 h-10 w-36"
+            class="bg-teal-500 text-white text-xs rounded-3xl mt-4 h-10 w-36 z-40 hover:bg-teal-700 select-button"
+            data-modal = "2"
           >
             Select Reward
           </button>
@@ -163,6 +189,7 @@
           </div>
           <button
             class="bg-gray-300 text-white text-xs rounded-3xl mt-4 h-10 w-36"
+            data-modal="3"
           >
             Out of Stock
           </button>
@@ -172,7 +199,10 @@
 
     <!-- Selection modal start -->
 
-    <aside class="bg-white p-4 m-5 rounded-xl">
+    <dialog class="bg-white p-4 m-5 rounded-xl" id="modal-section" autofocus="none">
+      <button class="ml-auto" id="modal-close">
+        <img src="images/icon-close-modal.svg">
+      </button>
       <h1 class="text-xl font-extrabold mt-5">Back this project</h1>
       <p class="text-xs text-gray-600 mt-2">
         Want to support us in bringing Mastercraft Bamboo Monitor Riser out in
@@ -186,6 +216,7 @@
             id="first-option"
             name="support-selection"
             value="1"
+            class="z-40 checked:bg-teal-400 checked:hover:bg-teal-400 checked:active:bg-teal-400 checked:focus:bg-teal-400 focus:bg-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
           />
           <label for="first-option"
             ><h4 class="font-bold text-sm ml-3">
@@ -198,6 +229,15 @@
           project. As a backer, you will be signed up to receive product updates
           via email.
         </p>
+        <div class="flex flex-col items-center justify-center mt-4 pledge hidden">
+          <hr class="w-full" />
+          <div class="flex items-center justify-center mt-3">
+            <button
+              class="bg-teal-500 text-white text-xs rounded-3xl h-10 w-28 z-10 hover:bg-teal-700 continue"
+            >
+              Continue
+            </button>
+          </div>
       </section>
 
       <section class="border border-solid border-black-300 p-4 mt-5 rounded-md">
@@ -207,6 +247,7 @@
             id="second-option"
             name="support-selection"
             value="2"
+            class="z-40 checked:bg-teal-400 checked:hover:bg-teal-400 checked:active:bg-teal-400 checked:focus:bg-teal-400 focus:bg-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
           />
           <label for="second-option" class="flex flex-col ml-3"
             ><h4 class="font-bold text-sm">Bamboo Stand Pledge</h4>
@@ -222,9 +263,29 @@
           <strong class="text-lg">101</strong>
           <p class="ml-2 text-sm">left</p>
         </div>
+  
 
         <!-- Selected pledge start -->
-        Enter your pledge $25 Continue
+        <div class="flex flex-col items-center justify-center mt-4 pledge hidden">
+          <hr class="w-full" />
+          <p class="mt-5">Enter your pledge</p>
+          <div class="flex items-center justify-center mt-3">
+            <div class="flex items-center relative">
+              <i class="absolute text-sm text-gray-400 left-3 z-20">£</i>
+              <input
+                type="number"
+                placeholder="25"
+                name="pledge-1"
+                class="text-black-10 h-10 w-20 pl-6 mr-5 text-black border border-gray-300 rounded-3xl z-10 focus:border-teal-600 focus:outline-non focus:ring-0"
+              />
+            </div>
+            <button
+              class="bg-teal-500 text-white text-xs rounded-3xl h-10 w-28 z-10 hover:bg-teal-700 continue"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
         <!-- Selected pledge end -->
       </section>
 
@@ -235,6 +296,7 @@
             id="third-option"
             name="support-selection"
             value="3"
+            class="z-40 checked:bg-teal-400 checked:hover:bg-teal-400 checked:active:bg-teal-400 checked:focus:bg-teal-400 focus:bg-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
           />
           <label for="third-option" class="flex flex-col ml-3"
             ><h4 class="font-bold text-sm">Black Edition Stand</h4>
@@ -251,20 +313,21 @@
         </div>
 
         <!-- Selected pledge start -->
-        <div class="flex flex-col items-center justify-center mt-4">
+        <div class="flex flex-col items-center justify-center mt-4 pledge hidden">
           <hr class="w-full" />
           <p class="mt-5">Enter your pledge</p>
           <div class="flex items-center justify-center mt-3">
             <div class="flex items-center relative">
-              <i class="absolute text-sm text-gray-400 left-3 z-40">£</i>
+              <i class="absolute text-sm text-gray-400 left-3 z-20">£</i>
               <input
                 type="number"
-                id="amount"
-                class="text-black-10 h-10 w-20 pl-6 mr-5 text-black border border-gray-300 rounded-3xl z-30 focus:outline-teal-500 number-input"
+                name="pledge-2"
+                placeholder="75"
+                class="text-black-10 h-10 w-20 pl-6 mr-5 text-black border border-gray-300 rounded-3xl z-10 focus:border-teal-600 focus:outline-non focus:ring-0"
               />
             </div>
             <button
-              class="bg-teal-600 text-white text-xs rounded-3xl h-10 w-28 hover:bg-sky-700"
+              class="bg-teal-500 text-white text-xs rounded-3xl h-10 w-28 z-10 hover:bg-teal-700 continue"
             >
               Continue
             </button>
@@ -280,35 +343,54 @@
             id="fourth-option"
             name="support-selection"
             value="4"
+            class="z-40 checked:bg-teal-400 checked:hover:bg-teal-400 checked:active:bg-teal-400 checked:focus:bg-teal-400 focus:bg-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
+            disabled
           />
           <label for="fourth-option" class="flex flex-col ml-3"
-            ><h4 class="font-bold text-sm">Mahogany Special Edition</h4>
-            <h5 class="text-teal-500 text-sm font-bold">Pledge $200 or more</h5>
+            ><h4 class="font-bold text-sm text-gray-400">Mahogany Special Edition</h4>
+            <h5 class="text-teal-300 text-sm font-bold">Pledge $200 or more</h5>
           </label>
         </div>
-        <p class="text-sm text-gray-600 mt-5">
+        <p class="text-sm text-gray-400 mt-5">
           You get two Special Edition Mahogany stands, a Backer T-Shirt, and a
           personal thank you. You’ll be added to our Backer member list.
           Shipping is included.
         </p>
         <div class="flex mt-4 items-center">
-          <strong class="text-lg">0</strong>
-          <p class="ml-2">left</p>
+          <strong class="text-lg text-gray-400">0</strong>
+          <p class="ml-2 text-gray-400">left</p>
         </div>
-
-        <!-- Selected pledge  start -->
-        Enter your pledge $200 Continue
-        <!-- Selected pledge end -->
+        <div class="flex flex-col items-center justify-center mt-4 pledge hidden">
+          <hr class="w-full" />
+          <p class="mt-5">Enter your pledge</p>
+          <div class="flex items-center justify-center mt-3">
+            <div class="flex items-center relative">
+              <i class="absolute text-sm text-gray-400 left-3 z-20">£</i>
+              <input
+                type="number"
+                placeholder="200"
+                name="pledge-1"
+                class="text-black-10 h-10 w-20 pl-6 mr-5 text-black border border-gray-300 rounded-3xl z-10 focus:border-teal-600 focus:outline-non focus:ring-0"
+              />
+            </div>
+            <button
+              class="bg-teal-500 text-white text-xs rounded-3xl h-10 w-28 z-10 hover:bg-teal-700"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
       </section>
       <!-- Selection modal end -->
-    </aside>
+    </dialog>
 
     <!-- Success modal start -->
 
-    <aside
-      class="bg-white p-4 m-5 rounded-xl flex flex-col justify-center items-center text-center"
+    <dialog
+      class="bg-white p-4 m-5 rounded-xl open:flex open:flex-col justify-center items-center text-center"
+      id="modal-success"
     >
-    <img src="images/icon-check.svg">
+      <img src="images/icon-check.svg" />
       <strong class="mt-4">Thanks for your support!</strong>
       <p class="mt-4">
         Your pledge brings us one step closer to sharing Mastercraft Bamboo
@@ -317,12 +399,14 @@
       </p>
       <button
         type="submit"
-        class="bg-teal-600 text-white text-xs rounded-3xl h-10 w-28 mt-4"
+        class="bg-teal-500 text-white text-xs rounded-3xl h-10 w-28 mt-4 z-10 hover:bg-teal-700"
+        id="success-btn"
       >
         Got it
       </button>
-    </aside>
+    </dialog>
 
     <!-- Success modal end -->
   </body>
+  <script src="index.js"></script>
 </html>
