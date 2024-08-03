@@ -1,24 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-  backThisProjectBtn = document.querySelector(".backBtn");
-  bkmark = document.querySelector(".bookmark");
-  menuBtn = document.querySelector(".menu-btn");
-  nav = document.querySelector("nav");
-  selectRewardBtns = document.querySelectorAll(".select-button");
-  radioBtns = document.querySelectorAll("input[type=radio]");
-  continueBtns = document.querySelectorAll(".continue");
-  modalSection = document.querySelector("#modal-section");
-  modalSuccess = document.querySelector("#modal-success");
-  totalBackers = document.querySelector("#total-backers");
-  backedAmount = document.querySelector("#backed-amount");
-  progressBar = document.querySelector("#progress-bar");
-  successBtn = document.querySelector("#success-btn");
-  modalClose = document.querySelector("#modal-close");
+  //dom queries
+  const backThisProjectBtn = document.querySelector(".backBtn");
+  const bkmark = document.querySelector(".bookmark");
+  const menuBtn = document.querySelector(".menu-btn");
+  const nav = document.querySelector("nav");
+  const selectRewardBtns = document.querySelectorAll(".select-button");
+  const radioBtns = document.querySelectorAll("input[type=radio]");
+  const continueBtns = document.querySelectorAll(".continue");
+  const modalSection = document.querySelector("#modal-section");
+  const modalSuccess = document.querySelector("#modal-success");
+  const totalBackers = document.querySelector("#total-backers");
+  const backedAmount = document.querySelector("#backed-amount");
+  const progressBar = document.querySelector("#progress-bar");
+  const successBtn = document.querySelector("#success-btn");
+  const modalClose = document.querySelector("#modal-close");
 
-  closeIcon = "images/icon-close-menu.svg";
-  menuIcon = "images/icon-hamburger.svg";
+  // variables
+  const closeIcon = "images/icon-close-menu.svg";
+  const menuIcon = "images/icon-hamburger.svg";
 
-
-// utility functions
+  // utility functions
 
   const show = (element) => {
     element.showModal();
@@ -38,33 +39,30 @@ document.addEventListener("DOMContentLoaded", function () {
     return num.toLocaleString();
   };
 
-  const updateProgress = (newTotal) =>{
-    target = Number(progressBar.dataset.target)
-    percentage = newTotal / target
-    console.log(newTotal, target, percentage)
+  const updateProgress = (newTotal) => {
+    target = Number(progressBar.dataset.target);
+    percentage = newTotal / target;
+    console.log(newTotal, target, percentage);
     if (percentage > 0.99) {
-      progressBar.classList.add('w-[100%]')
-    } else{
-      formattedPercentage = Math.round((percentage*100))
+      progressBar.classList.add("w-[100%]");
+    } else {
+      formattedPercentage = Math.round(percentage * 100);
       progressBar.style.width = `${formattedPercentage}%`;
     }
-  }
-
+  };
 
   const updateFigures = (amountPledged) => {
     //number of backers
-    cleanNumBackers = formatNumbers(totalBackers);
+    let cleanNumBackers = formatNumbers(totalBackers);
     cleanNumBackers++;
     totalBackers.textContent = displayNumber(cleanNumBackers);
 
     // amount pledged
-    cleanAmount = formatNumbers(backedAmount);
+    let cleanAmount = formatNumbers(backedAmount);
     cleanAmount = cleanAmount + Number(amountPledged);
-    updateProgress(Number(cleanAmount))
+    updateProgress(Number(cleanAmount));
     backedAmount.textContent = "$" + displayNumber(cleanAmount);
   };
-
-  
 
   // event listeners
 
@@ -98,42 +96,39 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  modalSuccess.close();
   // continue buttons
 
   continueBtns.forEach((element) => {
     element.addEventListener("click", function () {
-      let nearestInput = this.closest("div").querySelector("input");
-      if (nearestInput) {
-        // add validation in next version
-        updateFigures(nearestInput.value);
-        hide(modalSection);
-        show(modalSuccess);
-      } else {
-        updateFigures("0");
-        hide(modalSection);
-        show(modalSuccess);
-      }
+      const nearestInput = this.closest("div").querySelector("input");
+      const amount = nearestInput ? nearestInput.value : "0";
+      // add validation in next version
+      updateFigures(amount);
+      hide(modalSection);
+      show(modalSuccess);
     });
   });
 
   //bookmark btn
   bkmark.addEventListener("click", () => {
+    const circle = bkmark.querySelector("circle");
+    const path = bkmark.querySelector("path");
+    const closestP = bkmark.closest("div").querySelector("p");
+
     if (bkmark.classList.contains("not-bookmarked")) {
-      bkmark.querySelector("circle").style.fill = "#0f766e";
-      bkmark.querySelector("path").style.fill = "white";
-      bkmark.closest("div").querySelector("p").innerHTML = "Bookmarked";
+      circle.style.fill = "#0f766e";
+      path.style.fill = "white";
+      closestP.innerHTML = "Bookmarked";
       bkmark.classList.remove("not-bookmarked");
     } else {
-      bkmark.querySelector("circle").style.fill = "#2F2F2F";
-      bkmark.querySelector("path").style.fill = "#B1B1B1";
-      bkmark.closest("div").querySelector("p").innerHTML = "Bookmark";
+      circle.style.fill = "#2F2F2F";
+      path.style.fill = "#B1B1B1";
+      closestP.innerHTML = "Bookmark";
       bkmark.classList.add("not-bookmarked");
     }
   });
 
   //menu btn
-
   menuBtn.addEventListener("click", () => {
     if (nav.classList.contains("hidden")) {
       show(nav);
@@ -145,13 +140,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   //succes btn
-
   successBtn.addEventListener("click", () => {
     modalSuccess.close();
   });
 
   //modal close btn
-
   modalClose.addEventListener("click", () => {
     hide(modalSection);
   });
